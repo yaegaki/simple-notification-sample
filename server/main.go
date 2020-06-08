@@ -49,16 +49,16 @@ func main() {
 		err = store.RunTransaction(ctx, func(ctx context.Context, t *firestore.Transaction) error {
 			doc := store.Collection("Lock").Doc("Notification")
 			snap, err := doc.Get(ctx)
-			if err != nil && status.Code(err) != codes.NotFound {
-				return err
-			}
-
-			date, ok := snap.Data()["Date"]
-			if ok {
-				d, ok := date.(time.Time)
-				if ok && now.Hour() == d.UTC().Hour() {
-					return errors.New("failed to take lock")
+			if err == nil {
+				date, ok := snap.Data()["Date"]
+				if ok {
+					d, ok := date.(time.Time)
+					if ok && now.Hour() == d.UTC().Hour() {
+						return errors.New("failed to take lock")
+					}
 				}
+			} else if status.Code(err) != codes.NotFound {
+				return err
 			}
 
 			_, err = doc.Set(ctx, map[string]interface{}{
