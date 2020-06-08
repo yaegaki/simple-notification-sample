@@ -91,3 +91,5 @@ iOSInjectionProject/
 
 
 .vscode/
+.DS_Store
+GoogleService-Info.plist
