@@ -1,0 +1,6 @@
+runtime: go112
+
+handlers:
+  - url: /_job
+    script: auto
+    secure: always

@@ -1,0 +1,3 @@
+cron:
+- url: /_job
+  schedule: every 1 hours synchronized
